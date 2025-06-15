@@ -1,30 +1,36 @@
 {% extends "body.html" %}
 {% block body %}
-    
-    <form action="{{url_for('agrega_articulo')}}" method="post" id="formulario">
-            <div class="mb-3">
-                <label for="codigo_articulo">Codigo Articulo</label>
-                <input type="text" name="codigo_articulo" id="codigo_articulo" class="error form-control" placeholder="Ingrese el codigo del articulo">
-                <div id="codigo_articulo_error" class="error text-danger">Revise el tipo</div>
-            </div>
+
+    <form action="
+    {% if articulo %}
+        {{url_for('actualiza_articulo',codigo_articulo=articulo.codigo_articulo)}}
+    {% else %}
+        {{url_for('agrega_articulo')}}
+    {% endif %}
+    " method="post" id="formulario">
             <div class="mb-3">
                 <label for="nombre_articulo">Nombre Articulo</label>
-                <input type="text" name="nombre_articulo" id="nombre_articulo" class="error form-control" placeholder="Ingrese el nombre del articulo">
+                <input type="text" name="nombre_articulo" id="nombre_articulo" class="error form-control" value="{% if articulo %}{{articulo.nombre_articulo}}{% endif %}" placeholder="Introduzca el nombre del articulo">
                 <div id="nombre_articulo_error" class="error text-danger">Revise el tipo</div>
             </div>
             <div class="mb-3">
                 <label for="nombre_categoria">Nombre Categoria</label>
                 <select class="form-select" name="codigo_categoria" id="codigo_categoria" onchange="cambiarSubcategoria()">
-                    <option selected disabled>--Seleccione la categoria--</option>
+                    <option value="" disabled {% if not articulo %}selected{% endif %}>--Seleccione la Categoria--</option>
                     {% for categoria in categorias %}
-                        <option value="{{categoria.codigo_categoria}}" >{{categoria.nombre_categoria}}</option>
+                        <option value="{{categoria.codigo_categoria}}" {% if articulo and categoria.codigo_categoria==articulo.codigo_categoria %}selected{% endif %}>{{categoria.nombre_categoria}}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="mb-3">
                 <label for="nombre_subcategoria">Nombre Subcategoria</label>
                 <select class="form-select" name="codigo_subcategoria" id="codigo_subcategoria">
-                    <option selected disabled>--Seleccione la subcategoria--</option>
+                    <option value="" disabled {% if not articulo %}selected{% endif %}>--Seleccione la Subcategoria</option>
+                    {% if articulo %}
+                        {% for subcategoria in subcategorias %}
+                            <option value="{{subcategoria.codigo_subcategoria}}" {% if articulo.codigo_subcategoria==subcategoria.codigo_subcategoria %}selected{% endif %}>{{subcategoria.nombre_subcategoria}}</option>
+                        {% endfor %}
+                    {% endif %}
                 </select>
             </div>
             <input type="submit" value="Enviar" class="btn btn-outline-primary">
@@ -38,7 +44,7 @@
         fetch(`/get_subcategorias/${categoriaId}`)
             .then(response => response.json())
             .then(data=>{
-                subcategoria.innerHTML="";
+                subcategoria.innerHTML="<option disabled value='' selected>--Seleccione la Subcategoria--</option>";
                 data.forEach(sub=>{
                     const option=document.createElement("option");
                     option.value=sub.codigo_subcategoria;
