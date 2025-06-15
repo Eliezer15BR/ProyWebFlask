@@ -1,0 +1,29 @@
+{% extends "body.html" %}
+{% block body %}
+<h2>Articulos</h2>
+<a href="{{url_for('nuevo_articulo')}}" class="btn btn-outline-success btn-sm">+ Agregar</a>
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th>Codigo Articulo</th>
+            <th>Nombre del Articulo</th>
+            <th>Nombre Categoria</th>
+            <th>Nombre Subcategoria</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for articulo in articulos %}
+        <tr>
+            <td>{{articulo.codigo_articulo}}</td>
+            <td>{{articulo.nombre_articulo}}</td>
+            <td>{{articulo.nombre_categoria}}</td>
+            <td>{{articulo.nombre_subcategoria}}</td>
+            <td><a href="{{ url_for('editar_articulo',codigo_articulo=articulo.codigo_articulo,codigo_categoria=articulo.codigo_categoria) }}" class="btn btn-outline-primary btn-sm">* Editar</a>
+                <a href="{{url_for('elimina_articulo',codigo_articulo=articulo.codigo_articulo)}}" class="btn btn-outline-danger btn-sm">- Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

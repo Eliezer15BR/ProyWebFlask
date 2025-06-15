@@ -1,0 +1,29 @@
+{% extends "body.html" %}
+{% block body %}
+<h2>Subcategorias</h2>
+<a href="{{url_for('nueva_subcategoria')}}" class="btn btn-outline-success btn-sm">+ Agregar</a>
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th>Codigo Subcategoria</th>
+            <th>Nombre de la subcategoria</th>
+            <th>Nombre Categoria</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for subcategoria in subcategorias %}
+        <tr>
+            <td>{{subcategoria.codigo_subcategoria}}</td>
+            <td>{{subcategoria.nombre_subcategoria}}</td>
+            <td>{{subcategoria.nombre_categoria}}</td>
+            <td>
+                <a href="{{ url_for('editar_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria) }}" class="btn btn-outline-primary btn-sm">* Editar</a>
+                <a href="{{ url_for('eliminar_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria)}}" class="btn btn-outline-danger btn-sm">- Eliminar</a>
+                <a href="{{ url_for('articulos_por_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria) }}" class="btn btn-outline-success btn-sm">Ver Articulos</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
