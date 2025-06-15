@@ -10,21 +10,22 @@
     " method="post" id="formulario">
             <div class="mb-3">
                 <label for="nombre_articulo">Nombre Articulo</label>
-                <input type="text" name="nombre_articulo" id="nombre_articulo" class="error form-control" value="{% if articulo %}{{articulo.nombre_articulo}}{% endif %}" placeholder="Introduzca el nombre del articulo">
-                <div id="nombre_articulo_error" class="error text-danger">Revise el tipo</div>
+                <input type="text" name="nombre_articulo" id="nombre_articulo" class="error form-control" value="{% if articulo %}{{articulo.nombre_articulo}}{% endif %}" placeholder="Introduzca el nombre del articulo" >
+                <div id="nombre_articulo_error" class="error" role="alert">Revise el nombre</div>
             </div>
             <div class="mb-3">
-                <label for="nombre_categoria">Nombre Categoria</label>
-                <select class="form-select" name="codigo_categoria" id="codigo_categoria" onchange="cambiarSubcategoria()">
+                <label for="codigo_categoria">Nombre Categoria</label>
+                <select class="form-select" name="codigo_categoria" id="codigo_categoria" onchange="cambiarSubcategoria()" >
                     <option value="" disabled {% if not articulo %}selected{% endif %}>--Seleccione la Categoria--</option>
                     {% for categoria in categorias %}
                         <option value="{{categoria.codigo_categoria}}" {% if articulo and categoria.codigo_categoria==articulo.codigo_categoria %}selected{% endif %}>{{categoria.nombre_categoria}}</option>
                     {% endfor %}
                 </select>
+                <div id="codigo_categoria_error" class="error">Seleccione una categoria</div>
             </div>
             <div class="mb-3">
                 <label for="nombre_subcategoria">Nombre Subcategoria</label>
-                <select class="form-select" name="codigo_subcategoria" id="codigo_subcategoria">
+                <select class="form-select" name="codigo_subcategoria" id="codigo_subcategoria" >
                     <option value="" disabled {% if not articulo %}selected{% endif %}>--Seleccione la Subcategoria</option>
                     {% if articulo %}
                         {% for subcategoria in subcategorias %}
@@ -32,10 +33,12 @@
                         {% endfor %}
                     {% endif %}
                 </select>
+                <div id="codigo_subcategoria_error" class="error">Seleccione una subcategoria</div>
             </div>
-            <input type="submit" value="Enviar" class="btn btn-outline-primary">
+            <button type="button" class="btn btn-outline-primary" onclick="validar()">Enviar</button>
+            <a href="{{url_for('articulos')}}" class="btn btn-outline-danger">Cancelar</a>
     </form>
-    <a href="{{url_for('articulos')}}" class="btn btn-outline-danger mt-1">Cancelar</a>
+    
 <script>
     function cambiarSubcategoria(){
         const categoria=document.getElementById("codigo_categoria");
@@ -52,6 +55,50 @@
                     subcategoria.appendChild(option);
                 })
             })
+    }
+    function validar() {
+        const formulario=document.getElementById("formulario");
+
+        const nombre = document.getElementById("nombre_articulo").value;
+        const nombre_error=document.getElementById("nombre_articulo_error");
+
+        const categoria=document.getElementById("codigo_categoria");
+        const categoria_error=document.getElementById("codigo_categoria_error");
+
+        const subcategoria=document.getElementById("codigo_subcategoria");
+        const subcategoria_error=document.getElementById("codigo_subcategoria_error");
+
+        let valido=true;
+        if(nombre.trim()===""){
+            show(nombre_error);
+            valido=false;
+        }
+        else{
+            hide(nombre_error);
+        }
+        if(!categoria.value){
+            show(categoria_error);
+            valido=false;
+        }
+        else{
+            hide(categoria_error);
+        }
+        if(!subcategoria.value){
+            show(subcategoria_error);
+            valido=false;
+        }
+        else{
+            hide(subcategoria_error);
+        }
+        if(valido){
+            formulario.submit();
+        }
+    }
+    function hide(element){
+        element.style.display="none";
+    }
+    function show(element){
+        element.style.display="block";
     }
 </script>
 {% endblock %}

@@ -10,20 +10,57 @@
         " method="post" id="formulario">
             <div class="mb-3">
                 <label for="nombre_subcategoria">Nombre Subcategoria</label>
-                <input type="text" name="nombre_subcategoria" id="nombre_subcategoria" class="error form-control" value="{% if subcategoria %}{{subcategoria.nombre_subcategoria}}{% endif %}" placeholder="Ingrese el nombre de la subcategoria">
-                <div id="nombre_subcategoria_error" class="error text-danger">Revise el tipo</div>
+                <input type="text" name="nombre_subcategoria" id="nombre_subcategoria" class="error form-control" value="{% if subcategoria %}{{subcategoria.nombre_subcategoria}}{% endif %}" placeholder="Ingrese el nombre de la subcategoria" >
+                <div id="nombre_subcategoria_error" class="error">Revise el nombre</div>
             </div>
             <div class="mb-3">
-                <label for="nombre_categoria">Nombre Categoria</label>
+                <label for="codigo_categoria">Nombre Categoria</label>
                 <select class="form-select" name="codigo_categoria">
                     <option value="" {% if not subcategoria %}selected{% endif %} disabled>--Seleccione la categoria--</option>
                     {% for categoria in categorias %}
                         <option value="{{categoria.codigo_categoria}}" {% if subcategoria and categoria.codigo_categoria==subcategoria.codigo_categoria %}selected{% endif %}>{{categoria.nombre_categoria}}</option>
                     {% endfor %}
                 </select>
+                <div id="codigo_categoria_error" class="error">Seleccione una categoria</div>
             </div>
-            <input type="submit" value="Enviar" class="btn btn-outline-primary">
+            <button type="button" class="btn btn-outline-primary" onclick="validar()">Enviar</button>
+            <a href="{{url_for('subcategorias')}}" class="btn btn-outline-danger">Cancelar</a>
     </form>
-    <a href="{{url_for('subcategorias')}}" class="btn btn-outline-danger mt-1">Cancelar</a>
+    
+    <script>
+        function validar() {
+        const formulario=document.getElementById("formulario");
 
+        const categoria=document.getElementById("codigo_categoria");
+        const categoria_error=document.getElementById("codigo_categoria_error");
+
+        const subcategoria=document.getElementById("nombre_subcategoria").value;
+        const subcategoria_error=document.getElementById("nombre_subcategoria_error");
+
+        let valido=true;
+        if(!categoria){
+            show(categoria_error);
+            valido=false;
+        }
+        else{
+            hide(categoria_error);
+        }
+        if(subcategoria.trim()===""){
+            show(subcategoria_error);
+            valido=false;
+        }
+        else{
+            hide(subcategoria_error);
+        }
+        if(valido){
+            formulario.submit();
+        }
+    }
+    function hide(element){
+        element.style.display="none";
+    }
+    function show(element){
+        element.style.display="block";
+    }
+    </script>
 {% endblock %}
