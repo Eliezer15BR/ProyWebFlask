@@ -1,13 +1,19 @@
 {% extends "body.html" %}
 {% block body %}
-
+    <h2>
+    {% if articulo %}
+        Editar Articulo
+    {% else %}
+        Agregar Articulo
+    {% endif %}
+    </h2>
     <form action="
     {% if articulo %}
         {{url_for('actualiza_articulo',codigo_articulo=articulo.codigo_articulo)}}
     {% else %}
         {{url_for('agrega_articulo')}}
     {% endif %}
-    " method="post" id="formulario">
+    " method="post" id="formulario" class="bg-dark bg-gradient p-4 rounded">
             <div class="mb-3">
                 <label for="nombre_articulo">Nombre Articulo</label>
                 <input type="text" name="nombre_articulo" id="nombre_articulo" class="error form-control" value="{% if articulo %}{{articulo.nombre_articulo}}{% endif %}" placeholder="Introduzca el nombre del articulo" >

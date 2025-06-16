@@ -1,6 +1,6 @@
 {% extends "body.html" %}
 {% block body %}
-<h2>Subcategorias{% if nombre_categoria %} de la Categoria: {{nombre_categoria}}{% endif %}</h2>
+<h2>Subcategorias{% if nombre_categoria %} <br> Categoria: <span class="text-primary">{{nombre_categoria}}</span>{% endif %}</h2>
 <a href="{{url_for('nueva_subcategoria')}}" class="btn btn-outline-success btn-sm">+ Agregar</a>
 <table class="table table-bordered table-striped table-dark mt-2">
     <thead>
@@ -14,20 +14,24 @@
         </tr>
     </thead>
     <tbody class="table-group-divider">
-        {% for subcategoria in subcategorias %}
-        <tr>
-            <td>{{subcategoria.codigo_subcategoria}}</td>
-            <td>{{subcategoria.nombre_subcategoria}}</td>
-            {% if not nombre_categoria %}
-                <td>{{subcategoria.nombre_categoria}}</td>
-            {% endif %}
-            <td>
-                <a href="{{ url_for('editar_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria) }}" class="btn btn-outline-primary btn-sm">* Editar</a>
-                <a href="{{ url_for('eliminar_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria)}}" class="btn btn-outline-danger btn-sm">- Eliminar</a>
-                <a href="{{ url_for('articulos_por_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria,nombre_subcategoria=subcategoria.nombre_subcategoria,nombre_categoria=subcategoria.nombre_categoria) }}" class="btn btn-outline-success btn-sm">Ver Articulos</a>
-            </td>
-        </tr>
-        {% endfor %}
+        {% if subcategorias %}
+            {% for subcategoria in subcategorias %}
+            <tr>
+                <td>{{subcategoria.codigo_subcategoria}}</td>
+                <td>{{subcategoria.nombre_subcategoria}}</td>
+                {% if not nombre_categoria %}
+                    <td>{{subcategoria.nombre_categoria}}</td>
+                {% endif %}
+                <td>
+                    <a href="{{ url_for('editar_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria) }}" class="btn btn-outline-primary btn-sm">* Editar</a>
+                    <a href="{{ url_for('eliminar_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria)}}" class="btn btn-outline-danger btn-sm">- Eliminar</a>
+                    <a href="{{ url_for('articulos_por_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria,nombre_subcategoria=subcategoria.nombre_subcategoria,nombre_categoria=subcategoria.nombre_categoria) }}" class="btn btn-outline-success btn-sm">Ver Articulos</a>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <td colspan="{% if nombre_categoria %}3{% else %}4{% endif %}">No se encontraron subcategorias</td>
+        {% endif %}
     </tbody>
 </table>
 {% endblock %}

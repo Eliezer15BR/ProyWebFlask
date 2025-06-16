@@ -1,6 +1,6 @@
 {% extends "body.html" %}
 {% block body %}
-<h2>Articulos {% if nombre_subcategoria %}de la Subcategoria {{nombre_subcategoria}}{% endif %}{% if nombre_categoria %} de la Categoria {{nombre_categoria}}{% endif %}</h2>
+<h2>Articulos {% if nombre_subcategoria %} <br> Subcategoria: <span class="text-primary">{{nombre_subcategoria}}</span>{% endif %}{% if nombre_categoria %} <br> Categoria: <span class="text-primary">{{nombre_categoria}}</span>{% endif %}</h2>
 <a href="{{url_for('nuevo_articulo')}}" class="btn btn-outline-success btn-sm">+ Agregar</a>
 <table class="table table-bordered table-striped table-dark mt-2">
     <thead>
@@ -17,21 +17,27 @@
         </tr>
     </thead>
     <tbody class="table-group-divider">
-        {% for articulo in articulos %}
+        {% if articulos %}
+            {% for articulo in articulos %}
+            <tr>
+                <td>{{articulo.codigo_articulo}}</td>
+                <td>{{articulo.nombre_articulo}}</td>
+                {% if not nombre_categoria %}
+                    <td>{{articulo.nombre_categoria}}</td>
+                {% endif %}
+                {% if not nombre_subcategoria %}
+                    <td>{{articulo.nombre_subcategoria}}</td>
+                {% endif %}
+                    <td><a href="{{ url_for('editar_articulo',codigo_articulo=articulo.codigo_articulo,codigo_categoria=articulo.codigo_categoria) }}" class="btn btn-outline-primary btn-sm">* Editar</a>
+                    <a href="{{url_for('elimina_articulo',codigo_articulo=articulo.codigo_articulo)}}" class="btn btn-outline-danger btn-sm">- Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
         <tr>
-            <td>{{articulo.codigo_articulo}}</td>
-            <td>{{articulo.nombre_articulo}}</td>
-            {% if not nombre_categoria %}
-                <td>{{articulo.nombre_categoria}}</td>
-            {% endif %}
-            {% if not nombre_subcategoria %}
-                <td>{{articulo.nombre_subcategoria}}</td>
-            {% endif %}
-                <td><a href="{{ url_for('editar_articulo',codigo_articulo=articulo.codigo_articulo,codigo_categoria=articulo.codigo_categoria) }}" class="btn btn-outline-primary btn-sm">* Editar</a>
-                <a href="{{url_for('elimina_articulo',codigo_articulo=articulo.codigo_articulo)}}" class="btn btn-outline-danger btn-sm">- Eliminar</a>
-            </td>
+            <td colspan="{% if nombre_categoria and not nombre_subcategoria %}4{% elif nombre_categoria and nombre_subcategoria%}3{% else %}5{% endif %}">No se encontraron productos</td>
         </tr>
-        {% endfor %}
+        {% endif %}
     </tbody>
 </table>
 {% endblock %}

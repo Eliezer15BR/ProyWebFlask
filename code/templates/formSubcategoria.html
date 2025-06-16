@@ -1,13 +1,19 @@
 {% extends "body.html" %}
 {% block body %}
-
+    <h2>    
+        {% if subcategoria %}
+            Editar Subcategoria
+        {% else %}
+            Agregar Subcategoria
+        {% endif %}
+    </h2>
     <form action="
         {% if subcategoria %}
             {{url_for('actualiza_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria)}}
         {% else %}
             {{url_for('agrega_subcategoria')}}
         {% endif %}
-        " method="post" id="formulario">
+        " method="post" id="formulario" class="bg-dark bg-gradient p-4 rounded">
             <div class="mb-3">
                 <label for="nombre_subcategoria">Nombre Subcategoria</label>
                 <input type="text" name="nombre_subcategoria" id="nombre_subcategoria" class="error form-control" value="{% if subcategoria %}{{subcategoria.nombre_subcategoria}}{% endif %}" placeholder="Ingrese el nombre de la subcategoria" >
@@ -15,7 +21,7 @@
             </div>
             <div class="mb-3">
                 <label for="codigo_categoria">Nombre Categoria</label>
-                <select class="form-select" name="codigo_categoria">
+                <select class="form-select" name="codigo_categoria" id="codigo_categoria">
                     <option value="" {% if not subcategoria %}selected{% endif %} disabled>--Seleccione la categoria--</option>
                     {% for categoria in categorias %}
                         <option value="{{categoria.codigo_categoria}}" {% if subcategoria and categoria.codigo_categoria==subcategoria.codigo_categoria %}selected{% endif %}>{{categoria.nombre_categoria}}</option>
@@ -38,7 +44,7 @@
         const subcategoria_error=document.getElementById("nombre_subcategoria_error");
 
         let valido=true;
-        if(!categoria){
+        if(!categoria.value){
             show(categoria_error);
             valido=false;
         }

@@ -1,4 +1,11 @@
 {% extends "body.html" %}
 {% block body %}
-Bienvenidos a la página de control de los datos de los artículos
+<div class="index">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Portada del Proyecto" class="imgIndex">
+    <div class="texto">
+        <h2>Bienvenidos</h2>
+        <p>Bienvenidos a la página de control de los datos de los artículos</p>
+    </div>
+</div>
+
 {% endblock %}
