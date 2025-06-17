@@ -1,7 +1,7 @@
 {% extends "body.html" %}
 {% block body %}
 <h2>Categorias</h2>
-<a href="{{url_for('nueva_categoria')}}" class="btn btn-outline-success btn-sm">+ Agregar</a>
+<a href="{{url_for('nueva_categoria')}}" class="btn btn-outline-success btn-sm"><i class="bi bi-plus-square"></i> Agregar</a>
 <table class="table table-bordered table-striped table-dark mt-2">
     <thead>
         <tr>
@@ -16,10 +16,10 @@
             <tr>
                 <td>{{categoria.codigo_categoria}}</td>
                 <td>{{categoria.nombre_categoria}}</td>
-                <td><a href="{{ url_for('editar_categoria',codigo_categoria=categoria.codigo_categoria) }}" class="btn btn-outline-primary btn-sm">* Editar</a>
-                    <a href="{{ url_for('eliminar_categoria',codigo_categoria=categoria.codigo_categoria)}}" class="btn btn-outline-danger btn-sm ">- Eliminar</a>
-                    <a href="{{url_for('subcategorias',codigo_categoria=categoria.codigo_categoria,nombre_categoria=categoria.nombre_categoria)}}" class="btn btn-outline-success btn-sm">Ver Subcategorias</a>
-                    <a href="{{url_for('articulos_por_categoria',codigo_categoria=categoria.codigo_categoria,nombre_categoria=categoria.nombre_categoria)}}" class="btn btn-outline-success btn-sm">Ver Articulos</a>
+                <td><a href="{{ url_for('editar_categoria',codigo_categoria=categoria.codigo_categoria) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil-square"></i> Editar</a>
+                    <a href="{{ url_for('eliminar_categoria',codigo_categoria=categoria.codigo_categoria)}}" class="btn btn-outline-danger btn-sm " onclick="return confirm('¿Estás seguro de eliminar la categoría? Todas las subcategorias y articulos se eliminarán')"><i class="bi bi-trash3"></i> Eliminar</a>
+                    <a href="{{url_for('subcategorias',codigo_categoria=categoria.codigo_categoria,nombre_categoria=categoria.nombre_categoria)}}" class="btn btn-outline-success btn-sm"><i class="bi bi-eye"></i>Ver Subcategorias</a>
+                    <a href="{{url_for('articulos_por_categoria',codigo_categoria=categoria.codigo_categoria,nombre_categoria=categoria.nombre_categoria)}}" class="btn btn-outline-success btn-sm"><i class="bi bi-eye"></i>Ver Articulos</a>
                 </td>
             </tr>
             {% endfor %}

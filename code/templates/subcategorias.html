@@ -1,7 +1,7 @@
 {% extends "body.html" %}
 {% block body %}
 <h2>Subcategorias{% if nombre_categoria %} <br> Categoria: <span class="text-primary">{{nombre_categoria}}</span>{% endif %}</h2>
-<a href="{{url_for('nueva_subcategoria')}}" class="btn btn-outline-success btn-sm">+ Agregar</a>
+<a href="{{url_for('nueva_subcategoria')}}" class="btn btn-outline-success btn-sm"><i class="bi bi-plus-square"></i> Agregar</a>
 <table class="table table-bordered table-striped table-dark mt-2">
     <thead>
         <tr>
@@ -23,9 +23,9 @@
                     <td>{{subcategoria.nombre_categoria}}</td>
                 {% endif %}
                 <td>
-                    <a href="{{ url_for('editar_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria) }}" class="btn btn-outline-primary btn-sm">* Editar</a>
-                    <a href="{{ url_for('eliminar_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria)}}" class="btn btn-outline-danger btn-sm">- Eliminar</a>
-                    <a href="{{ url_for('articulos_por_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria,nombre_subcategoria=subcategoria.nombre_subcategoria,nombre_categoria=subcategoria.nombre_categoria) }}" class="btn btn-outline-success btn-sm">Ver Articulos</a>
+                    <a href="{{ url_for('editar_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil-square"></i> Editar</a>
+                    <a href="{{ url_for('eliminar_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria)}}" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar el subarticulo? Todos los artículos de la subcategoria se eliminarán')"><i class="bi bi-trash3"></i> Eliminar</a>
+                    <a href="{{ url_for('articulos_por_subcategoria',codigo_subcategoria=subcategoria.codigo_subcategoria,nombre_subcategoria=subcategoria.nombre_subcategoria,nombre_categoria=subcategoria.nombre_categoria) }}" class="btn btn-outline-success btn-sm"><i class="bi bi-eye"></i>Ver Articulos</a>
                 </td>
             </tr>
             {% endfor %}
