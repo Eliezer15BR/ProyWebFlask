@@ -14,12 +14,12 @@
             {{url_for('agrega_subcategoria')}}
         {% endif %}
         " method="post" id="formulario" class="bg-dark bg-gradient p-4 rounded">
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="nombre_subcategoria">Nombre Subcategoria</label>
-                <input type="text" name="nombre_subcategoria" id="nombre_subcategoria" class="error form-control" value="{% if subcategoria %}{{subcategoria.nombre_subcategoria}}{% endif %}" placeholder="Ingrese el nombre de la subcategoria" >
+                <input type="text" name="nombre_subcategoria" id="nombre_subcategoria" class="form-control" value="{% if subcategoria %}{{subcategoria.nombre_subcategoria}}{% endif %}" placeholder="Ingrese el nombre de la subcategoria" >
                 <div id="nombre_subcategoria_error" class="error">Revise el nombre</div>
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="codigo_categoria">Nombre Categoria</label>
                 <select class="form-select" name="codigo_categoria" id="codigo_categoria">
                     <option value="" {% if not subcategoria %}selected{% endif %} disabled>--Seleccione la categoria--</option>
@@ -63,10 +63,10 @@
         }
     }
     function hide(element){
-        element.style.display="none";
+        element.classList.remove('mostrar');
     }
     function show(element){
-        element.style.display="block";
+        element.classList.add('mostrar');
     }
     </script>
 {% endblock %}

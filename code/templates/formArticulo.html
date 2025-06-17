@@ -14,12 +14,12 @@
         {{url_for('agrega_articulo')}}
     {% endif %}
     " method="post" id="formulario" class="bg-dark bg-gradient p-4 rounded">
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="nombre_articulo">Nombre Articulo</label>
-                <input type="text" name="nombre_articulo" id="nombre_articulo" class="error form-control" value="{% if articulo %}{{articulo.nombre_articulo}}{% endif %}" placeholder="Introduzca el nombre del articulo" >
+                <input type="text" name="nombre_articulo" id="nombre_articulo" class="form-control" value="{% if articulo %}{{articulo.nombre_articulo}}{% endif %}" placeholder="Introduzca el nombre del articulo" >
                 <div id="nombre_articulo_error" class="error" role="alert">Revise el nombre</div>
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="codigo_categoria">Nombre Categoria</label>
                 <select class="form-select" name="codigo_categoria" id="codigo_categoria" onchange="cambiarSubcategoria()" >
                     <option value="" disabled {% if not articulo %}selected{% endif %}>--Seleccione la Categoria--</option>
@@ -29,7 +29,7 @@
                 </select>
                 <div id="codigo_categoria_error" class="error">Seleccione una categoria</div>
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="nombre_subcategoria">Nombre Subcategoria</label>
                 <select class="form-select" name="codigo_subcategoria" id="codigo_subcategoria" >
                     <option value="" disabled {% if not articulo %}selected{% endif %}>--Seleccione la Subcategoria</option>
@@ -101,10 +101,10 @@
         }
     }
     function hide(element){
-        element.style.display="none";
+        element.classList.remove('mostrar');
     }
     function show(element){
-        element.style.display="block";
+        element.classList.add('mostrar');
     }
 </script>
 {% endblock %}

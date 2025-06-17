@@ -14,9 +14,9 @@
         {{url_for('agrega_categoria')}}
     {% endif %}
     " method="post" id="formulario" class="bg-dark bg-gradient p-4 rounded">
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="nombre_categoria">Nombre Categoria</label>
-                <input type="text" name="nombre_categoria" id="nombre_categoria" class="error form-control" value="{% if categoria %}{{categoria.nombre_categoria}}{% endif %}" placeholder="Ingrese el nombre" >
+                <input type="text" name="nombre_categoria" id="nombre_categoria" class="form-control" value="{% if categoria %}{{categoria.nombre_categoria}}{% endif %}" placeholder="Ingrese el nombre" >
                 <div id="nombre_categoria_error" class="error" role="alert">Revise el nombre</div>
             </div>
             <button type="button" class="btn btn-outline-primary" onclick="validar()" >Enviar</button>
@@ -43,10 +43,10 @@
         }
     }
     function hide(element){
-        element.style.display="none";
+        element.classList.remove('mostrar');
     }
     function show(element){
-        element.style.display="block";
+        element.classList.add('mostrar');
     }
     </script>
 {% endblock %}

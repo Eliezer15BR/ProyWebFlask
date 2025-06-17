@@ -1,5 +1,9 @@
 :root{
-    --colorMenu:hsl(250,80%,10%);
+    --colorMenu:linear-gradient(
+                        to right,
+                        hsl(250,80%,10%),
+                        hsl(250,80%,14%)
+                        );
     --colorContenido:linear-gradient(
                         to bottom,
                         hsl(230,80%,10%),
@@ -7,10 +11,10 @@
                         hsl(230,80%,25%)
                         );
     --colorFooterHeader:linear-gradient(
-                        to right bottom,
-                        hsl(230,80%,8%) 50%,
+                        to  bottom,
+                        hsl(230,80%,8%) ,
                         hsl(230,80%,5%),
-                        hsl(230,80%,1%)
+                        hsl(230,80%,4%)
                         );;
     --colorMenuHover:rgb(212, 255, 255);
     --espacioMenu:250px;
@@ -50,6 +54,7 @@ nav{
     display: flex;
     flex-direction: column;
     background: var(--colorMenu);
+    border-right: solid hsl(230,80%,70%) .1em;
 }
 nav a{
     border-radius: .2em;
@@ -58,15 +63,16 @@ nav a{
     align-items: center;
     flex: 1;
     padding: 25px;
-    background-color: var(--colorMenu);
+    background: transparent;
     color:rgb(132, 255, 255);
     text-decoration: none;
     font-size: 20px;
     max-height: 5em;
+    transition: all .3s linear;
 }
 nav a:hover{
     background-color: var(--colorMenuHover);
-    transition: .5s;
+    transform: scale(1.02);
 }
 main{
     margin-left: var(--espacioMenu);
@@ -79,15 +85,25 @@ main{
     background-color: rgba(73, 16, 16, 0.61);
     margin-top: 2px;
     padding-left: 10px;
-    display: none;
+    transition: transform .3s;
+    transform: scaleY(0);
     color:rgb(235, 144, 144);
     border:1px solid rgb(228, 36, 36);
     border-radius: .4em;
 }
+.error.mostrar{
+    transform: scaleY(1);
+}
 .index{
     display: flex;
+    align-items: center;
 }
 .imgIndex{
-    width: 8em;
+    width: 10em;
     display: inline-block;
+    object-fit: cover;
+}
+.btn:hover{
+    transition: all .2s;
+    transform: scale(1.07);
 }
